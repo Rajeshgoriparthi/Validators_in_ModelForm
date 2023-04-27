@@ -16,7 +16,7 @@ class StudentForm(forms.Form):
     email=forms.EmailField()
     re_enter_email=forms.EmailField()
     mobile=forms.CharField(max_length=10,min_length=10,validators=[validators.RegexValidator('[6-9]\d{9}')])
-    
+    botcatcher=forms.CharField(max_length=50,widget=forms.HiddenInput,required=False)
 
 
     def clean(self):
@@ -26,4 +26,7 @@ class StudentForm(forms.Form):
             raise forms.ValidationError('Email Not matched')
 
 
-    
+    def clean_botcatcher(self):
+        bot=self.cleaned_data.get('botcatcher')
+        if len(bot)>0:
+            raise forms.ValidationError('data is not enterd')
